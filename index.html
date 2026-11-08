@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="把一个创意分叉成大胆、省成本和易落地三条路径的本地无限画布。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111110'/%3E%3Cpath d='M8 16h7m0 0v-6m0 6v6m0-12h8m-8 12h8' stroke='%23d7ff54' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+  <title>Forkflow Canvas · 创意分叉画布</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Forkflow Canvas"><span class="brand-mark">Y</span><span>FORKFLOW <b>CANVAS</b></span></a>
+    <div class="project-name"><span class="live-dot"></span><input id="project-title" value="城市记忆 / 创意探索"></div>
+    <div class="top-actions">
+      <button id="import-button" type="button">导入</button>
+      <button id="export-json" type="button">JSON</button>
+      <button class="primary" id="export-png" type="button">导出画布</button>
+      <input id="import-file" type="file" accept="application/json" hidden>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <aside class="tool-dock" aria-label="画布工具">
+      <button class="tool active" data-tool="select" title="选择 / V"><span>↖</span><small>选择</small></button>
+      <button class="tool" data-tool="add" title="新节点 / N"><span>＋</span><small>想法</small></button>
+      <button class="tool" data-tool="connect" title="连接 / C"><span>⌁</span><small>连接</small></button>
+      <div class="dock-rule"></div>
+      <button class="tool accent" id="branch-button" title="三向分叉 / B"><span>⑂</span><small>分叉</small></button>
+      <button class="tool" id="focus-button" title="聚焦路径 / F"><span>◎</span><small>聚焦</small></button>
+      <button class="tool" id="demo-button" title="重置演示"><span>↻</span><small>演示</small></button>
+    </aside>
+
+    <section class="canvas-frame" id="canvas-frame" aria-label="创意画布">
+      <div class="canvas-grid"></div>
+      <div class="world" id="world">
+        <svg class="connections" id="connections" aria-hidden="true"></svg>
+        <div id="nodes-layer"></div>
+      </div>
+      <div class="canvas-hint" id="canvas-hint"><kbd>B</kbd> 分叉 · <kbd>N</kbd> 新想法 · <kbd>F</kbd> 聚焦 · 滚轮缩放</div>
+      <div class="zoom-controls">
+        <button id="zoom-out" aria-label="缩小">−</button><button id="zoom-label" title="适应画布">100%</button><button id="zoom-in" aria-label="放大">＋</button><button id="fit-button" aria-label="适应画布">⌗</button>
+      </div>
+      <div class="minimap" id="minimap" aria-label="画布缩略图"></div>
+    </section>
+
+    <aside class="inspector" id="inspector">
+      <div class="inspector-head"><div><small>CREATIVE RADAR</small><h2>探索仪表</h2></div><button id="inspector-close" aria-label="关闭检查器">×</button></div>
+      <div class="radar-orbit">
+        <div class="orbit-ring ring-one"></div><div class="orbit-ring ring-two"></div>
+        <div class="radar-score"><strong id="divergence-score">0</strong><span>发散度</span></div>
+      </div>
+      <div class="stat-grid">
+        <div><small>节点</small><strong id="stat-nodes">0</strong></div><div><small>深度</small><strong id="stat-depth">0</strong></div>
+        <div><small>类型</small><strong id="stat-types">0</strong></div><div><small>收敛</small><strong id="stat-convergence">0%</strong></div>
+      </div>
+      <section class="selection-panel" id="selection-panel">
+        <div class="panel-label">SELECTED NODE</div>
+        <label>标题<textarea id="node-title" rows="3"></textarea></label>
+        <div class="field-row"><label>类型<select id="node-type"><option value="idea">普通想法</option><option value="seed">核心种子</option><option value="bold">大胆方向</option><option value="lean">省成本</option><option value="feasible">易落地</option><option value="reference">参考</option><option value="risk">风险</option></select></label><label>状态<select id="node-status"><option value="open">探索中</option><option value="chosen">已选择</option><option value="parked">暂存</option></select></label></div>
+        <label>备注<textarea id="node-note" rows="4" placeholder="为什么值得继续？"></textarea></label>
+        <div class="selection-actions"><button id="duplicate-button">复制</button><button id="delete-button" class="danger">删除</button></div>
+      </section>
+      <section class="empty-selection" id="empty-selection"><strong>选择一个节点</strong><p>编辑内容，或按 B 让它分叉成三条创意路径。</p></section>
+      <div class="privacy-note"><span>●</span><p><strong>LOCAL FIRST</strong><br>画布自动保存在当前浏览器，不上传素材。</p></div>
+    </aside>
+  </main>
+  <button class="mobile-inspector" id="mobile-inspector" aria-label="打开探索仪表">◉</button>
+  <div class="toast" id="toast" role="status"></div>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>

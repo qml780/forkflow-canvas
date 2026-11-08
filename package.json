@@ -1,0 +1,17 @@
+{
+  "name": "forkflow-canvas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "本地优先的创意分叉无限画布",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/core.test.js",
+    "test:ui": "node tests/browser-smoke.mjs",
+    "check": "npm test && npm run test:ui"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "playwright-core": "^1.54.2"
+  }
+}
